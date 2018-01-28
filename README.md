@@ -1,2 +1,3 @@
 # AFTC.OnlineFileBrowser
-A quick and easy PHP online file browser.
+A quick, simple and easy to use online PHP file browser which is mobile responsive.
+
