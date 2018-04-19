@@ -52,8 +52,10 @@ class AFTCDirBrowser
         );
 
 
+        //$this->protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https'?'https':'http';
+        $this->protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
         //$this->url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $this->url = "http://$_SERVER[HTTP_HOST]" . strtok($_SERVER["REQUEST_URI"], '?');
+        $this->url = $this->protocol . "://$_SERVER[HTTP_HOST]" . strtok($_SERVER["REQUEST_URI"], '?');
         $this->root = $this->url;
         $this->browser_title = "AFTC Dir & File Browser - Darcey@aftc.io";
         $this->aftc_browser_file_name = basename($_SERVER["SCRIPT_FILENAME"]);
@@ -208,6 +210,7 @@ class AFTCDirBrowser
             }
             //trace($link);
             $html .= "<tr>\n";
+            // $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>" . $link . " - " . $directory . "</td>\n";
             $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>" . $directory . "</td>\n";
             $html .= "</tr>\n";
         }
@@ -235,6 +238,7 @@ class AFTCDirBrowser
             }
 
             echo("<tr>\n");
+            //echo("<td class='list-col list-col1 btn' title='CLICK TO OPEN / RIGHT CLICK SAVE AS TO SAVE THIS FILE' onclick='navigateTo(\"" . $link . "\");'>" . $link . " - " . $file . "</td>\n");
             echo("<td class='list-col list-col1 btn' title='CLICK TO OPEN / RIGHT CLICK SAVE AS TO SAVE THIS FILE' onclick='navigateTo(\"" . $link . "\");'>" . $file . "</td>\n");
             echo("<td class='list-col list-col2 btn'>" . $this->file_sizes[$key] . "</td>\n");
             echo("</tr>\n");
