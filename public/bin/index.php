@@ -65,8 +65,8 @@ class AFTCDirBrowser
 
             $this->nav_path = urldecode($_GET['f']);
             $this->nav_path = str_replace("?f=", "", $this->nav_path);
-            print_r("_GET['f'] = " . $_GET['f'] . "\n");
-            print_r("this->nav_path = " . $this->nav_path . "\n");
+            //print_r("_GET['f'] = " . $_GET['f'] . "\n");
+            //print_r("this->nav_path = " . $this->nav_path . "\n");
 
             $this->dir = getcwd() . "/" . $_GET['f'];
             $this->dir = str_replace("../", "", $this->dir);
