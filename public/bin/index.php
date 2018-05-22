@@ -62,8 +62,12 @@ class AFTCDirBrowser
 
         if (isset($_GET['f'])) {
             $this->folder_path_is_set = true;
-            $this->nav_path = $_GET['f'];
+
+            $this->nav_path = urldecode($_GET['f']);
             $this->nav_path = str_replace("?f=", "", $this->nav_path);
+            print_r("_GET['f'] = " . $_GET['f'] . "\n");
+            print_r("this->nav_path = " . $this->nav_path . "\n");
+
             $this->dir = getcwd() . "/" . $_GET['f'];
             $this->dir = str_replace("../", "", $this->dir);
         } else {
@@ -95,9 +99,10 @@ class AFTCDirBrowser
                 // Build link
                 for ($l = 0; $l <= $i; $l++) {
                     if ($l == 0) {
-                        $crumb["link"] = $crumb["link"] . $this->bits[$l];
+                        // Root
+                        $crumb["link"] = $crumb["link"] . urlencode($this->bits[$l]);
                     } else {
-                        $crumb["link"] = $crumb["link"] . "/" . $this->bits[$l];
+                        $crumb["link"] = $crumb["link"] . "/" . urlencode($this->bits[$l]);
                     }
                 }
                 array_push($this->crumbs,$crumb);
@@ -114,6 +119,8 @@ class AFTCDirBrowser
 //        trace("this->current_file = " . $this->current_file);
 
         // Check server path with url path is a valid dir or file
+        // print_r("this->dir = " . $this->dir . "\n");
+
         if (is_dir($this->dir)) {
             if (file_exists($this->dir)) {
                 // We have a directory!
@@ -203,10 +210,12 @@ class AFTCDirBrowser
         foreach ($this->dirs as $key => $value) {
             //echo($key . " = " . $value . "<br>");
             $directory = str_replace($this->url . "\\", "", $value);
+            $nice_name = $directory;
+
             if ($this->nav_path != "") {
-                $link = $this->url . "?f=" . $this->nav_path . "/" . $directory;
+                $link = $this->url . "?f=" . urlencode($this->nav_path) . "/" . urlencode($directory);
             } else {
-                $link = $this->url . "?f=" . $directory;
+                $link = $this->url . "?f=" . urlencode($directory);
             }
             //trace($link);
             $html .= "<tr>\n";
@@ -225,6 +234,8 @@ class AFTCDirBrowser
     {
         foreach ($this->files as $key => $value) {
             $file = str_replace($this->url . "\\", "", $value);
+            $nice_name = $file;
+            $file = htmlspecialchars($file, ENT_QUOTES);
             if ($this->nav_path != "") {
                 $link = $this->url . str_replace($this->current_file, "", $this->nav_path) . "/" . $file;
             } else {
@@ -232,14 +243,15 @@ class AFTCDirBrowser
             }
 
             if (OPEN_FILES_IN_NEW_TAB) {
-                $html_link = "<a href='" . $link . "' target='_blank'>" . $file . "</a>";
+                $html_link = "<a href='" . $link . "' target='_blank'>aaaaa" . $nice_name . "</a>";
             } else {
-                $html_link = "<a href='" . $link . "'>" . $file . "</a>";
+                $html_link = "<a href='" . $link . "'>aaaaa" . $nice_name . "</a>";
             }
 
             echo("<tr>\n");
-            //echo("<td class='list-col list-col1 btn' title='CLICK TO OPEN / RIGHT CLICK SAVE AS TO SAVE THIS FILE' onclick='navigateTo(\"" . $link . "\");'>" . $link . " - " . $file . "</td>\n");
-            echo("<td class='list-col list-col1 btn' title='CLICK TO OPEN / RIGHT CLICK SAVE AS TO SAVE THIS FILE' onclick='navigateTo(\"" . $link . "\");'>" . $file . "</td>\n");
+            $title = "CLICK TO OPEN / RIGHT CLICK SAVE AS TO SAVE THIS FILE";
+            //echo("<td class='list-col list-col1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $link . " - " . $file . "</td>\n");
+            echo("<td class='list-col list-col1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $nice_name . "</td>\n");
             echo("<td class='list-col list-col2 btn'>" . $this->file_sizes[$key] . "</td>\n");
             echo("</tr>\n");
         }
@@ -270,7 +282,7 @@ class AFTCDirBrowser
                 for ($l = 0; $l <= $i; $l++) {
                     if ($l == 0) {
                         //$link = $link . $bits[$l];
-                        $link = $link . $bits[$l];
+                        $link = $link . urlencode($bits[$l]);
                     } else {
                         $link = $link . "/" . $bits[$l];
                     }
