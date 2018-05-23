@@ -44,7 +44,8 @@ class AFTCDirBrowser
         $this->name_filters = array(
             ".htaccess",
             ".htpasswd",
-            ".well-known"
+            ".well-known",
+            "cgi-bin"
         );
 
         // Partial ignore rules

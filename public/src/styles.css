@@ -222,7 +222,6 @@ a:visited {
 #list-table td {
     padding: 5px 10px 5px 15px;
     font-size: 14px;
-    color: #000000;
     background: RGBA(200,200,200,0.8);
 }
 
@@ -260,7 +259,7 @@ a:visited {
 @media (min-width: 1px) and (max-width: 700px) {
 }
 
-@media (min-width: 201px) {
+@media (max-width: 450px) {
 
 
 
