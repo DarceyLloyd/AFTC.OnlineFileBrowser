@@ -1,9 +1,28 @@
 function log(str) {
-    console.log(str);
+    if (console) { console.log(str); }
+}
+
+window.isMobile = function () {
+    // Windows Phone must come first because its UA also contains "Android"!
+    var ua = navigator.userAgent.toLowerCase();
+    if (/windows phone/i.test(ua)) {
+        return true;
+    } else {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 
 var AFTCFileBrowserBackground = function () {
+
+    if (isMobile()) {
+        // No funky backgrounds for mobile, save the load on cpu/gpu
+        return;
+    }
 
     var params = {
         canvas1: null,
@@ -52,6 +71,8 @@ var AFTCFileBrowserBackground = function () {
         });
 
     }
+
+
 
 
     // function animateForDesktop(){

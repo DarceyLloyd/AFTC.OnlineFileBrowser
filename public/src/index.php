@@ -43,12 +43,14 @@ class AFTCDirBrowser
         // Fully qualified names ignore rules
         $this->name_filters = array(
             ".htaccess",
-            ".htpasswd"
+            ".htpasswd",
+            ".well-known"
         );
 
         // Partial ignore rules
         $this->partial_filters = array(
-            "-hide-"
+            "-hide-",
+            ".trk"
         );
 
 
@@ -165,16 +167,26 @@ class AFTCDirBrowser
                     array_push($this->files, $value);
                     $file = $this->dir . "/" . $value;
                     $osize = filesize($file);
-
-                    if ($osize > 1048576) {
-                        $size = $osize / 1024 / 1024;
-                        $size = number_format((float)$size, 1, '.', '');
-                        $size = $size . "mb";
-                    } else {
-                        $size = $osize / 1024;
-                        $size = number_format((float)$size, 1, '.', '');
-                        $size = $size . "kb";
+                    if ($osize < 0){
+                        $osize = 0 - $osize;
                     }
+
+                    $in = "";
+                    if ($osize > 1073741824) {
+                        // GB
+                        $in = " GB";
+                        $size = $osize / 1024 / 1024 / 1024;
+                    } else if ($osize > 1048576) {
+                        // MB
+                        $in = " mb";
+                        $size = $osize / 1024 / 1024;
+                    } else {
+                        // KB
+                        $in = " kb";
+                        $size = $osize / 1024;
+                    }
+                    $size = number_format((float)$size, 1, '.', '');
+                    $size = $size . $in;
 
 
                     array_push($this->file_sizes, $size);
@@ -203,7 +215,7 @@ class AFTCDirBrowser
                 $link = $this->url;
             }
             $html .= "<tr>\n";
-            $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>[up]</td>\n";
+            $html .= "<td class='up-link' onclick='navigateToFolder(\"" . $link . "\");'>[up] </td>\n";
             $html .= "</tr>\n";
         }
 
@@ -249,10 +261,10 @@ class AFTCDirBrowser
             }
 
             echo("<tr>\n");
-            $title = "CLICK TO OPEN / RIGHT CLICK SAVE AS TO SAVE THIS FILE";
+            $title = "";
             //echo("<td class='list-col list-col1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $link . " - " . $file . "</td>\n");
-            echo("<td class='list-col list-col1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $nice_name . "</td>\n");
-            echo("<td class='list-col list-col2 btn'>" . $this->file_sizes[$key] . "</td>\n");
+            echo("<td class='col-1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $nice_name . "</td>\n");
+            echo("<td class='col-2'>" . $this->file_sizes[$key] . "</td>\n");
             echo("</tr>\n");
         }
     }
@@ -396,9 +408,9 @@ $aftc = new AFTCDirBrowser();
         </div>
 
         <?php if ( sizeof($aftc->dirs) > 0 || $aftc->folder_path_is_set ){ ?>
-            <table id="dir-table">
+            <table id="list-table">
                 <tr>
-                    <td class="title-col title-col1">Directories</td>
+                    <th>Directories</th>
                 </tr>
                 <?php $aftc->listDirectories(); ?>
             </table>
@@ -406,10 +418,10 @@ $aftc = new AFTCDirBrowser();
 
 
         <?php if (sizeof($aftc->files) > 0) { ?>
-            <table id="file-table">
+            <table id="list-table">
                 <tr>
-                    <td class="title-col title-col1">File names</td>
-                    <td class="title-col title-col2">Size</td>
+                    <th class="col-1">File names</th>
+                    <th class="col-2">Size</th>
                 </tr>
                 <?php $aftc->listFiles(); ?>
             </table>

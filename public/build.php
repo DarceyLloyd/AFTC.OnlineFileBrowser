@@ -57,10 +57,14 @@ function minify($file){
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
             // process the line read.
-            $line = preg_replace("/[\r\n\t]+/", " ", $line); // Remove newlines & tabs
-            $line = str_replace("    ","",$line); // Minification step
-            $line = str_replace("  ","",$line); // Minification step
-            $line = str_replace("  ","",$line); // Minification step
+            //$line = preg_replace("/[\r\n\t]+/", " ", $line); // Remove newlines & tabs
+            $i;
+            for ($i=0; $i<10; $i++){
+                $line = str_replace("\n","",$line); // Minification step
+                $line = str_replace("\t","",$line); // Minification step
+                $line = str_replace("    ","",$line); // Minification step
+                $line = str_replace("  ","",$line); // Minification step
+            }
             $line = str_replace("  ","",$line); // Minification step
             $isComment = strpos($line,"//");
             if ($isComment === false){
