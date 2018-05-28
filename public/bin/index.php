@@ -45,7 +45,8 @@ class AFTCDirBrowser
             ".htaccess",
             ".htpasswd",
             ".well-known",
-            "cgi-bin"
+            "cgi-bin",
+            ".ftpquota"
         );
 
         // Partial ignore rules
