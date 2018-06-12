@@ -1,7 +1,7 @@
 {
     "name": "aftc/online-file-browser",
     "description": "AFTC Online file browser",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "type": "project",
     "license": "MIT",
     "authors": [

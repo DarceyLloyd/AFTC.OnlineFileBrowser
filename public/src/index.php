@@ -231,10 +231,15 @@ class AFTCDirBrowser
             } else {
                 $link = $this->url . "?f=" . urlencode($directory);
             }
+
+            $html_link = "<a href='" . $link . "' class='file-link'>" . $directory . "</a>";
+
             //trace($link);
             $html .= "<tr>\n";
             // $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>" . $link . " - " . $directory . "</td>\n";
-            $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>" . $directory . "</td>\n";
+            // $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>" . $directory . "</td>\n";
+            $html .= "<td class='list-col list-col1 btn'>" . $html_link . "</td>\n";
+            
             $html .= "</tr>\n";
         }
 
@@ -257,16 +262,18 @@ class AFTCDirBrowser
             }
 
             if (OPEN_FILES_IN_NEW_TAB) {
-                $html_link = "<a href='" . $link . "' target='_blank'>aaaaa" . $nice_name . "</a>";
+                $html_link = "<a href='" . $link . "' target='_blank' class='file-link'>" . $nice_name . "</a>";
             } else {
-                $html_link = "<a href='" . $link . "'>aaaaa" . $nice_name . "</a>";
+                $html_link = "<a href='" . $link . "' class='file-link'>" . $nice_name . "</a>";
             }
 
             echo("<tr>\n");
             $title = "";
             //echo("<td class='list-col list-col1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $link . " - " . $file . "</td>\n");
-            echo("<td class='col-1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $nice_name . "</td>\n");
-            echo("<td class='col-2'>" . $this->file_sizes[$key] . "</td>\n");
+
+            // echo("<td class='col-1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $html_link . "</td>\n");
+            echo("<td class='col-1 btn' title='".$title."'>" . $html_link . "</td>\n");
+            echo("<td class='col-2 file-size-col'>" . $this->file_sizes[$key] . "</td>\n");
             echo("</tr>\n");
         }
     }

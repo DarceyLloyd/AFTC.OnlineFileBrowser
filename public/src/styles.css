@@ -14,6 +14,7 @@ html, body {
 
 
 
+
 .small {
     font-size: 11px;
 }
@@ -44,9 +45,28 @@ a:visited {
 
 
 
+.file-link {
+    display: block;
+    padding: 5px 10px 5px 15px;
+    font-size: 14px;
+    background: RGBA(200,200,200,0.8);
+    text-decoration: none;
+    color: #000000;
+}
+
+.file-link:hover  {
+    color: #FFFFFF;
+    background: RGBA(50,0,0,0.95);
+    text-decoration: underline;
+}
 
 
 
+.file-size-col {
+    background: RGBA(200,200,200,0.8);
+    text-decoration: none;
+    color: #000000;
+}
 
 
 
@@ -190,6 +210,17 @@ a:visited {
     font-size: 14px !important;
     font-weight: bold;
     cursor: pointer;
+    display: block;
+    padding: 5px 10px 5px 15px;
+    font-size: 14px;
+    background: RGBA(200,200,200,0.8);
+    text-decoration: none;
+    color: #000000;
+}
+
+.up-link:hover {
+    color: #FFFFFF;
+    background: RGBA(50,0,0,0.95);
 }
 
 
@@ -220,14 +251,14 @@ a:visited {
 }
 
 #list-table td {
-    padding: 5px 10px 5px 15px;
+    /* padding: 5px 10px 5px 15px;
     font-size: 14px;
-    background: RGBA(200,200,200,0.8);
+    background: RGBA(200,200,200,0.8); */
 }
 
 #list-table td:hover {
-    color: #FFFFFF;
-    background: RGBA(50,0,0,0.95);
+    /* color: #FFFFFF;
+    background: RGBA(50,0,0,0.95); */
 }
 
 
@@ -270,7 +301,7 @@ a:visited {
         text-align: center;
     }
 
-    #list-table th {
+    /* #list-table th {
         padding: 5px 10px 5px 5px;
         font-size: 18px;
         font-weight: bold;
@@ -288,6 +319,23 @@ a:visited {
     #list-table td:hover {
         color: #FFFFFF;
         background: RGBA(50,0,0,0.95);
+    } */
+
+    #list-table th {
+
+        font-size: 18px;
+        font-weight: bold;
+        color: #FFFFFF;
+
+    }
+
+    #list-table td a {
+        font-size: 18px;
+    }
+
+    .file-size-col {
+        font-weight: bold;
+        font-size: 12px !important;
     }
 
 
