@@ -28,8 +28,8 @@ copyFolderAndContents("./src","./bin");
 
 // echo($local_cfg->version);
 // die();
-$css = file_get_contents("./src/styles.css");
-// $css = minify("./src/styles.css");
+// $css = file_get_contents("./src/styles.css");
+$css = minifyCSS("./src/styles.css");
 // $js = file_get_contents("./src/script.js");
 $js = minify("./src/script.js");
 
@@ -57,6 +57,32 @@ echo("AFTC: If all went well you should now have a bin directory with an index.p
 
 // Utility functions
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+function minifyCSS($file){
+    $handle = fopen($file, "r");
+    $out = "";
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+            // process the line read.
+            //$line = preg_replace("/[\r\n\t]+/", " ", $line); // Remove newlines & tabs
+            $i;
+            for ($i=0; $i<10; $i++){
+                $line = str_replace("\n"," ",$line); // Minification step
+                $line = str_replace("\r"," ",$line); // Minification step
+                $line = str_replace("\t","",$line); // Minification step
+                $line = str_replace("  "," ",$line); // Minification step
+                $line = str_replace("  "," ",$line); // Minification step
+                $line = str_replace("  "," ",$line); // Minification step
+                $line = str_replace("}","}     ",$line);
+            }
+            $out .= $line;
+        }
+
+        fclose($handle);
+    }
+
+    return $out;    
+}
+
 
 function minify($file){
     require_once("./JSqueeze.php");

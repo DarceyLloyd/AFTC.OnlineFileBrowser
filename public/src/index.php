@@ -493,7 +493,7 @@ $aftc = new AFTCDirBrowser();
 
     <div id="layer3">
         <div id="header">
-            <h1>AFTC - Online File Browser V<?php echo($aftc->local_version); ?></h1>
+            <h1>AFTC - Online File Browser <span style='font-size:9px;'>v<?php echo($aftc->local_version); ?></span></h1>
             <h2>For support email <a href="mailto:Darcey@aftc.io" target="_blank">Darcey@aftc.io</a></h2>
         </div>
 
@@ -517,7 +517,7 @@ $aftc = new AFTCDirBrowser();
 
         <table width='100%' border='0' cellspacing='1' cellpadding='0' id='list-table'>
         <tr>
-            <th class='col-head-1'>File name</th>
+            <th class='col-head-1'>Files</th>
             <th class='col-head-2'>Size</th>
         </tr>
         <?php $aftc->listFiles(); ?>
