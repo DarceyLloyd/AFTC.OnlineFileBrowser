@@ -20,7 +20,11 @@ deleteDir("./bin");
 mkdir("bin");
 copyFolderAndContents("./src","./bin");
 
+$composer = file_get_contents("./composer.json");
+$composer = json_decode($composer);
 
+// echo($composer->version);
+// die();
 //$css = file_get_contents("./src/styles.css");
 //$js = file_get_contents("./src/script.js");
 $css = minify("./src/styles.css");
@@ -31,6 +35,7 @@ $js = minify("./src/script.js");
 $js = str_replace("</script>","",$js);
 
 $mainFile = file_get_contents("./src/index.php");
+$mainFile = str_replace("[version",$composer->version,$mainFile);
 $mainFile = str_replace("[CSS]",$css,$mainFile);
 $mainFile = str_replace("//[JS]",$js,$mainFile);
 
