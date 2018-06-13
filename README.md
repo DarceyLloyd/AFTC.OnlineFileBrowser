@@ -12,6 +12,7 @@ A quick, simple and easy to use online PHP file browser which is mobile responsi
  - Open bin/index.php
  - set "enable_self_update" to true to allow for self update
  - set "image_mode" to true to display image thumbnails for images when detected
+ - set "animate_bg" to true to animate background behind tiles (tracks mouse)
 
 
 
