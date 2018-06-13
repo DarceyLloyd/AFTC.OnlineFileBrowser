@@ -1,6 +1,6 @@
 <?php
 
-
+function out($arg){ echo($arg."\n"); }
 
 /**
  * Build process
@@ -16,14 +16,17 @@
 
 system('cls');
 
+$local_cfg = file_get_contents("./composer.json");
+$local_cfg = json_decode($local_cfg);
+//out("local_cfg->version = " . $local_cfg->version);
+
 deleteDir("./bin");
 mkdir("bin");
 copyFolderAndContents("./src","./bin");
 
-$composer = file_get_contents("./composer.json");
-$composer = json_decode($composer);
 
-// echo($composer->version);
+
+// echo($local_cfg->version);
 // die();
 //$css = file_get_contents("./src/styles.css");
 $js = file_get_contents("./src/script.js");
@@ -35,13 +38,14 @@ $css = minify("./src/styles.css");
 $js = str_replace("</script>","",$js);
 
 $mainFile = file_get_contents("./src/index.php");
-$mainFile = str_replace("[version]",$composer->version,$mainFile);
+$mainFile = str_replace("[version]",$local_cfg->version,$mainFile);
 $mainFile = str_replace("[CSS]",$css,$mainFile);
 $mainFile = str_replace("//[JS]",$js,$mainFile);
 
 deleteFile("./bin/styles.css");
 deleteFile("./bin/script.js");
 file_put_contents("./bin/index.php",$mainFile);
+file_put_contents("./bin/index.txt",$mainFile);
 
 echo("AFTC: If all went well you should now have a bin directory with an index.php file you can use!");
 

@@ -11,7 +11,9 @@ define("OPEN_FILES_IN_NEW_TAB", true);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class AFTCDirBrowser
 {
-    public $version = "[version]";
+    public $local_version = "[version]";
+    public $online_version = "";
+    public $enable_self_update = true;
     public $image_mode = true;
 
     public $url;
@@ -43,6 +45,26 @@ class AFTCDirBrowser
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public function __construct()
     {
+        // Check auto update
+        if ($this->enable_self_update){
+            $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json");
+            $online_cfg = json_decode($online_cfg);
+            $this->online_version = (double) $online_cfg->version;
+            $this->local_version = (double) $this->local_version;
+            trace("online_version = " . $this->online_version);
+            trace("local_version = " . $this->local_version);
+            trace(gettype($this->online_version));
+            trace(gettype($this->local_version));
+            // Check datatypes
+            if (gettype($this->online_version) == "double" && gettype($this->online_version) == "double"){
+                // check if newer online
+                if ($this->online_version > $this->local_version){
+                    trace("UPDATE AVAILABLE");
+                }
+            }
+            die();
+        }
+
         // Fully qualified names ignore rules
         $this->name_filters = array(
             ".htaccess",
@@ -242,12 +264,7 @@ class AFTCDirBrowser
     public function listFiles()
     {
         $html = "";
-        $html = "<table width='100%' border='0' cellspacing='1' cellpadding='0' id='list-table'>\n";
-        $html .= "<tr>\n";
-            // $html .= "<th class='head-col-1'>Preview</th>";
-            $html .= "<th class='col-head-1'>File name</th>\n";
-            $html .= "<th class='col-head-2'>Size</th>\n";
-        $html .= "</tr>\n";
+        
 
         if (sizeof($this->files) > 0) {
             // There be files here!
@@ -309,7 +326,6 @@ class AFTCDirBrowser
                 $html .= "<td class='col-list-2'>&nbsp;</td>\n";
             $html .= "</tr>\n";
         }
-        $html .= "</table>\n";
         echo($html);
         
     }
@@ -461,7 +477,13 @@ $aftc = new AFTCDirBrowser();
             </table>
         <?php } ?>
 
+        <table width='100%' border='0' cellspacing='1' cellpadding='0' id='list-table'>
+        <tr>
+            <th class='col-head-1'>File name</th>
+            <th class='col-head-2'>Size</th>
+        </tr>
         <?php $aftc->listFiles(); ?>
+        </table>
 
         <div id="footer">
             &copy; Data &amp; Dreams LTD | email: <a href="mailto:darcey@aftc.io" target="_blank">Darcey@aftc.io</a>
