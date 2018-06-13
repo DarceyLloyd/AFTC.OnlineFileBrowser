@@ -47,6 +47,12 @@ class AFTCDirBrowser
     {
         // Check auto update
         if ($this->enable_self_update){
+            // Ensure we dont accidentally update src
+            if (file_exists("./script.js") && file_exists("./styles.js") && file_exists("./.gitignore")){
+                trace("HIGH CHANCE YOUR UPDATING SOURCE - UPDATE BLOCKED");
+                die();
+            }
+
             $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json");
             $online_cfg = json_decode($online_cfg);
             $this->online_version = (double) $online_cfg->version;
