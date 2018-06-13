@@ -29,9 +29,9 @@ copyFolderAndContents("./src","./bin");
 // echo($local_cfg->version);
 // die();
 //$css = file_get_contents("./src/styles.css");
-$js = file_get_contents("./src/script.js");
 $css = minify("./src/styles.css");
-// $js = minify("./src/script.js");
+// $js = file_get_contents("./src/script.js");
+$js = minify("./src/script.js");
 
 
 
@@ -69,10 +69,10 @@ function minify($file){
             //$line = preg_replace("/[\r\n\t]+/", " ", $line); // Remove newlines & tabs
             $i;
             for ($i=0; $i<10; $i++){
-                $line = str_replace("\n","",$line); // Minification step
-                $line = str_replace("\t","",$line); // Minification step
-                $line = str_replace("    ","",$line); // Minification step
-                $line = str_replace("  ","",$line); // Minification step
+                // $line = str_replace("\n","",$line); // Minification step
+                // $line = str_replace("\t","",$line); // Minification step
+                // $line = str_replace("    ","",$line); // Minification step
+                // $line = str_replace("  ","",$line); // Minification step
             }
             $line = str_replace("  ","",$line); // Minification step
             $isComment = strpos($line,"//");

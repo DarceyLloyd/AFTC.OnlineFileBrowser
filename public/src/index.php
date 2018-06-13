@@ -52,15 +52,16 @@ class AFTCDirBrowser
                 trace("HIGH CHANCE YOUR UPDATING SOURCE - UPDATE BLOCKED");
                 die();
             }
-
+            
             $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json");
             $online_cfg = json_decode($online_cfg);
             $this->online_version = (double) $online_cfg->version;
             $this->local_version = (double) $this->local_version;
-            // trace("online_version = " . $this->online_version);
-            // trace("local_version = " . $this->local_version);
-            // trace(gettype($this->online_version));
-            // trace(gettype($this->local_version));
+            trace("online_version = " . $this->online_version);
+            trace("local_version = " . $this->local_version);
+            // trace(gettype($this->online_version)); // double
+            // trace(gettype($this->local_version)); // double
+            // die();
             // Check datatypes
             if (gettype($this->online_version) == "double" && gettype($this->online_version) == "double"){
                 // check if newer online
