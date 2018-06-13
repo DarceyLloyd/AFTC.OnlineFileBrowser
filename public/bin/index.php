@@ -11,7 +11,7 @@ define("OPEN_FILES_IN_NEW_TAB", true);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class AFTCDirBrowser
 {
-    public $version = "1.1.0]";
+    public $version = "1.1.0";
     public $image_mode = true;
 
     public $url;

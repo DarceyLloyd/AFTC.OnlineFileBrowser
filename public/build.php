@@ -35,7 +35,7 @@ $css = minify("./src/styles.css");
 $js = str_replace("</script>","",$js);
 
 $mainFile = file_get_contents("./src/index.php");
-$mainFile = str_replace("[version",$composer->version,$mainFile);
+$mainFile = str_replace("[version]",$composer->version,$mainFile);
 $mainFile = str_replace("[CSS]",$css,$mainFile);
 $mainFile = str_replace("//[JS]",$js,$mainFile);
 
