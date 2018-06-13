@@ -34,7 +34,6 @@ $css = minify("./src/styles.css");
 $js = minify("./src/script.js");
 
 
-
 $js = str_replace("</script>","",$js);
 
 $mainFile = file_get_contents("./src/index.php");
@@ -68,10 +67,11 @@ function minify($file){
             //$line = preg_replace("/[\r\n\t]+/", " ", $line); // Remove newlines & tabs
             $i;
             for ($i=0; $i<10; $i++){
-                // $line = str_replace("\n","",$line); // Minification step
+                $line = str_replace("\n"," ",$line); // Minification step
                 // $line = str_replace("\t","",$line); // Minification step
                 // $line = str_replace("    ","",$line); // Minification step
-                // $line = str_replace("  ","",$line); // Minification step
+                $line = str_replace("   "," ",$line); // Minification step
+                // $line = str_replace("}","}     ",$line);
             }
             $line = str_replace("  ","",$line); // Minification step
             $isComment = strpos($line,"//");

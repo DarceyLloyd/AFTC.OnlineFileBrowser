@@ -8,6 +8,14 @@ header("Content-Type: text/html");
 // CONFIGURATION
 define("OPEN_FILES_IN_NEW_TAB", true);
 
+function outBoolean($arg){
+    if ($arg){
+        echo("true");
+    } else {
+        echo("false");
+    }
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class AFTCDirBrowser
 {
@@ -453,16 +461,9 @@ $aftc = new AFTCDirBrowser();
         </style>
 
         <script>
-            <?php
-            // PHP > JS
-            $var = "var OpenFilesInNewTab = ";
-            if (OPEN_FILES_IN_NEW_TAB) {
-                $var .= "true;\n";
-            } else {
-                $var .= "false;\n";
-            }
-            echo($var);
-            ?>
+            var imageMode = <?php outBoolean($aftc->image_mode); ?>;
+            var animateBg = <?php outBoolean($aftc->image_mode); ?>;
+            var OpenFilesInNewTab = <?php outBoolean(OPEN_FILES_IN_NEW_TAB); ?>;
 
             function navigateTo(url) {
                 if (!OpenFilesInNewTab) {

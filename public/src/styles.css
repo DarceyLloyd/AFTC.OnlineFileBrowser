@@ -384,6 +384,7 @@ a:visited {
 
 #footer {
     margin-top: 10px;
+    margin-bottom: 20px;
     padding: 10px;
     background: RGBA(50,0,0,0.85);
     font-size: 11px;
@@ -398,6 +399,12 @@ a:visited {
 #footer a:hover {
     text-decoration: none;
 }
+
+
+
+
+
+
 
 
 

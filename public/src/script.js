@@ -17,7 +17,7 @@ window.isMobile = function () {
 }
 
 
-var AFTCFileBrowserBackground = function () {
+var AFTCFileBrowser = function (imageMode,animateBg,OpenFilesInNewTab) {
 
     if (isMobile()) {
         // No funky backgrounds for mobile, save the load on cpu/gpu
@@ -47,47 +47,45 @@ var AFTCFileBrowserBackground = function () {
         params.mousePos.x = params.halfW;
         params.mousePos.y = params.halfH;
 
-        return;
-
-        // params.ctx1.beginPath();
-        // params.ctx1.fillStyle = "RGBA(0,0,0,0.5)";
-        // params.ctx1.fillRect(5, 5, params.w - 5, params.h - 5);
-
-
-        if (typeof window.orientation === 'undefined') {
-            // Desktop
-            window.addEventListener("mousemove", canvasOnMouseMoveHandler);
-            canvasOnMouseMoveHandler();
-            //animateForDesktop();
-        } else {
-            // Mobile
-            animateForMobile();
-            //window.addEventListener("touchmove",canvasOnMouseMoveHandler);
+        if (animateBg){
+            if (typeof window.orientation === 'undefined') {
+                // Desktop
+                window.addEventListener("mousemove", canvasOnMouseMoveHandler);
+                canvasOnMouseMoveHandler();
+                //animateForDesktop();
+            } else {
+                // Mobile
+                animateForMobile();
+                //window.addEventListener("touchmove",canvasOnMouseMoveHandler);
+            }
+    
+            window.addEventListener("resize", function () {
+                params.w = (params.canvas1.width = window.innerWidth);
+                params.h = (params.canvas1.height = window.innerHeight);
+                params.halfW = params.w / 2;
+                params.halfH = params.h / 2;
+            });
         }
+        
 
-        window.addEventListener("resize", function () {
-            params.w = (params.canvas1.width = window.innerWidth);
-            params.h = (params.canvas1.height = window.innerHeight);
-            params.halfW = params.w / 2;
-            params.halfH = params.h / 2;
-        });
+        // Set thumbnails via background css
+        if (imageMode){
+            
+            var elements = document.getElementsByClassName("img-container");
+            for (var i = 0; i < elements.length; i++) {
+                var element = elements[i];
+                var bgContainer = element.getElementsByClassName("bg-container")[0];
+                var src = element.getAttribute("data-link");
+                // log(src);
+                bgContainer.style.backgroundImage = "url(\"" + src + "\")";
+                //log(element);
 
-
-        var elements = document.getElementsByClassName("img-container");
-        for (var i = 0; i < elements.length; i++) {
-            var element = elements[i];
-            var bgContainer = element.getElementsByClassName("bg-container")[0];
-            var src = element.getAttribute("data-link");
-            // log(src);
-            bgContainer.style.backgroundImage = "url(\"" + src + "\")";
-            //log(element);
-
-            // var img = new Image();
-            // img.src = src;
-            // img.classList.add("img-preview");
-            // element.appendChild(img);
+                // var img = new Image();
+                // img.src = src;
+                // img.classList.add("img-preview");
+                // element.appendChild(img);
+            }
         }
-
     }
 
 
@@ -210,196 +208,8 @@ var AFTCFileBrowserBackground = function () {
 };
 
 
-// var AFTCFileBrowserBackground = function () {
-
-//     var params = {
-//         canvas: null,
-//         ctx: null,
-//         w: 0,
-//         h: 0,
-//         mousePos: {},
-//         tiles:[],
-//         opacityChangeSpeed:0.1
-//     };
-
-//     function init() {
-//         params.canvas = document.getElementById('canvas1');
-//         params.ctx = params.canvas.getContext('2d');
-//         params.w = (params.canvas.width = window.innerWidth);
-//         params.h = (params.canvas.height = window.innerHeight);
-
-//         params.ctx.beginPath();
-//         params.ctx.fillStyle = "RGBA(200,0,0,0.5)";
-//         params.ctx.fillRect(5, 5, params.w - 5, params.h - 5);
-
-
-//         params.canvas.addEventListener("mousemove", canvasOnMouseMoveHandler);
-
-//         window.addEventListener("resize", function () {
-//             params.w = (params.canvas.width = window.innerWidth);
-//             params.h = (params.canvas.height = window.innerHeight);
-//         });
-
-//         generateTiles();
-//         renderLoop();
-//     }
-
-
-//     function canvasOnMouseMoveHandler(e) {
-//         log("canvasOnMouseMoveHandler(e)");
-//         params.mousePos = getMousePos(params.canvas, e);
-//         //log(params.mousePos);
-//         document.getElementById("debug").innerHTML = params.mousePos.x.toFixed(1) + "   :   " + params.mousePos.y.toFixed(1);
-
-//         // var rect = params.canvas.getBoundingClientRect(),
-//         //     x = params.canvas.clientX - rect.left,
-//         //     y = params.canvas.clientY - rect.top,
-//         //     i = 0, r;
-//         // log(x);
-//     }
-
-
-//     function generateTiles(){
-//         log("generateTiles()");
-
-//         params.grid = {};
-//         params.tileSize = 50;
-//         params.tileGap = 15;
-
-//         var offset = 0,
-//             _x = offset,
-//             _y = offset,
-//             _xLim = (params.w + offset),
-//             _yLim = (params.h + offset),
-//             tile;
-
-//         // Store tiles as tile value objects in params.tiles
-//         while (_y < _yLim) {
-//             while (_x < _xLim) {
-//                 tile = tileVo(_x,_y);
-//                 params.tiles.push(tile);
-
-//                 // Draw tile
-//                 //params.ctx.fillStyle = getRandomColor();
-//                 var RGBA = "RGBA(" + tile.r + "," + tile.g + "," + tile.b + "," + tile.alpha + ")";
-//                 //log(RGBA);
-//                 params.ctx.fillStyle = "RGBA(" + tile.r + "," + tile.g + "," + tile.b + "," + tile.alpha + ")";
-//                 params.ctx.fillRect(tile.sX, tile.sY, params.tileSize, params.tileSize); // NOTE: Doesnt work like flash just width not actual end coordinate
-
-//                 //log(_x + "," + _y + "," + params.tileSize + "," + params.tileSize);
-//                 _x += (params.tileSize) + (params.tileGap);
-//             }
-//             _x = offset;
-//             _y += (params.tileSize) + (params.tileGap);
-//         }
-//     }
-
-
-//     function draw() {
-//         log("draw()");
-
-//         for (var index in params.tiles){
-//             //log(index + ": " + params.tiles[index]);
-//             tile = params.tiles[index];
-
-//                 // Draw tile
-//                 //params.ctx.fillStyle = getRandomColor();
-//                 var RGBA = "RGBA(" + tile.r + "," + tile.g + "," + tile.b + "," + tile.alpha + ")";
-//                 //log(RGBA);
-//                 params.ctx.fillStyle = "RGBA(" + tile.r + "," + tile.g + "," + tile.b + "," + tile.alpha + ")";
-//                 params.ctx.fillRect(tile.sX, tile.sY, params.tileSize, params.tileSize); // NOTE: Doesnt work like flash just width not actual end coordinate
-
-//                 //log(_x + "," + _y + "," + params.tileSize + "," + params.tileSize);
-//                 _x += (params.tileSize) + (params.tileGap);
-//             _x = offset;
-//             _y += (params.tileSize) + (params.tileGap);
-//         }
-//     }
-
-
-//     function renderLoop(){
-//         window.requestAnimationFrame(renderLoop);
-//         var sX, eX, sY, eY, tile;
-//         for (var index in params.tiles){
-//             //log(index + ": " + params.tiles[index]);
-//             tile = params.tiles[index];
-//             if (params.mousePos.x >= tile.sX && params.mousePos.x <= tile.eX){
-//                 log("MOUSE IS OVER TILE [" + index + "]");
-//                 if (tile.opacity < 1)
-//                 {
-//                     tile.opacity += opacityChangeSpeed;
-//                     if (tile.opacity > 1){
-//                         tile.opacity = 1;
-//                     }
-//                 }
-//             } else {
-//                 if (tile.opacity > 0)
-//                 {
-//                     tile.opacity -= opacityChangeSpeed;
-//                     if (tile.opacity < 1){
-//                         tile.opacity = 0;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-
-
-//     function tileVo(x,y){
-//         var tile = {
-//             sX:x,
-//             sY:y,
-//             eX:0,
-//             eY:0,
-//             alpha:1,
-//             r:0,
-//             g:0,
-//             b:0
-//         }
-
-//         tile.eX = params.tileSize + x;
-//         tile.eY = params.tileSize + y;
-//         tile.r = Math.floor(Math.random() * 255);
-//         tile.g = Math.floor(Math.random() * 255);
-//         tile.b = Math.floor(Math.random() * 255);
-//         return tile;
-//     }
-
-
-//     // Public
-
-
-//     // Utility
-//     function getMousePos(canvas, evt) {
-//         var rect = canvas.getBoundingClientRect(), // abs. size of element
-//             scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for X
-//             scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
-
-//         return {
-//             x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
-//             y: (evt.clientY - rect.top) * scaleY,     // been adjusted to be relative to element
-//             xx: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-//             yy: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
-//         }
-//     }
-
-//     function getRandomColor() {
-//         var letters = '0123456789ABCDEF';
-//         var color = '#';
-//         for (var i = 0; i < 6; i++) {
-//             color += letters[Math.floor(Math.random() * 16)];
-//         }
-//         return color;
-//     }
-
-
-//     // Simulate constructor execution
-//     init();
-// }
-
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-new AFTCFileBrowserBackground();
+new AFTCFileBrowser(imageMode,animateBg,OpenFilesInNewTab);
 
 
 
