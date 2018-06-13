@@ -11,7 +11,7 @@ define("OPEN_FILES_IN_NEW_TAB", true);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class AFTCDirBrowser
 {
-    public $local_version = "1.2";
+    public $local_version = "1.1";
     public $online_version = "";
     public $enable_self_update = true;
     public $image_mode = true;
@@ -51,18 +51,39 @@ class AFTCDirBrowser
             $online_cfg = json_decode($online_cfg);
             $this->online_version = (double) $online_cfg->version;
             $this->local_version = (double) $this->local_version;
-            trace("online_version = " . $this->online_version);
-            trace("local_version = " . $this->local_version);
-            trace(gettype($this->online_version));
-            trace(gettype($this->local_version));
+            // trace("online_version = " . $this->online_version);
+            // trace("local_version = " . $this->local_version);
+            // trace(gettype($this->online_version));
+            // trace(gettype($this->local_version));
             // Check datatypes
             if (gettype($this->online_version) == "double" && gettype($this->online_version) == "double"){
                 // check if newer online
                 if ($this->online_version > $this->local_version){
                     trace("UPDATE AVAILABLE");
+                    $html = "<html>";
+                    $html .= "<head>";
+                    $html .= "<script>";
+                    $html .= "function reload(){";
+                    $html .= "self.location.href = self.location.href;";
+                    $html .= "}";
+                    $html .= "function init(){";
+                    $html .= "setTimeout(reload,1500)";
+                    $html .= "}";
+                    $html .= "</script>";
+                    $html .= "<body onload='init()'>";
+                    $html .= "<h3>Self updating, please wait...</h3>";
+                    $html .= "<a href='javascript:reload()'>If you are not redirected shortly, please click here</a>";
+                    $html .= "</body>";
+                    $html .= "</head>";
+                    $html .= "</html>";
+                    echo($html);
+
+                    $update = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/bin/index.php");
+                    file_put_contents("./index.php",$update);
+                    die();
                 }
             }
-            die();
+            
         }
 
         // Fully qualified names ignore rules
