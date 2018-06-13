@@ -6,12 +6,12 @@ A quick, simple and easy to use online PHP file browser which is mobile responsi
 
  - cd into public
  - cmd type php build.php
- - check bin folder for index.php which is your generated file, the rest are test files for browsing test
+ - check bin folder for index.php which is your generated file, the rest are test files for browsing tests
 
 ### Configuration
- - See variables at top of index.php in bin folder
+ - Open bin/index.php
  - set "enable_self_update" to true to allow for self update
- - set "image_mode" to true to display image thumbnails for images when detected (beta)
+ - set "image_mode" to true to display image thumbnails for images when detected
 
 
 

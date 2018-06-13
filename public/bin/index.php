@@ -19,7 +19,7 @@ function outBoolean($arg){
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class AFTCDirBrowser
 {
-    public $local_version = "1.5";
+    public $local_version = "1.4";
     public $online_version = "";
     public $enable_self_update = true;
     public $image_mode = true;
@@ -61,17 +61,16 @@ class AFTCDirBrowser
 
         // Check auto update
         if ($this->enable_self_update && !$GoodChanceOfUpdatingSrc){
-            
-            
-            $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json");
+            $r = rand(0,9999999);
+            $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json?v=".$r);
             $online_cfg = json_decode($online_cfg);
             $this->online_version = (double) $online_cfg->version;
             $this->local_version = (double) $this->local_version;
-            // trace("online_version = " . $this->online_version);
-            // trace("local_version = " . $this->local_version);
-            // trace(gettype($this->online_version)); // double
-            // trace(gettype($this->local_version)); // double
-            // die();
+            trace("online_version = " . $this->online_version);
+            trace("local_version = " . $this->local_version);
+            trace(gettype($this->online_version)); // double
+            trace(gettype($this->local_version)); // double
+            die();
             // Check datatypes
             if (gettype($this->online_version) == "double" && gettype($this->online_version) == "double"){
                 // check if newer online
