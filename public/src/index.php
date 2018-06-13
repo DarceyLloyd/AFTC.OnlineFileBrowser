@@ -18,11 +18,14 @@ function outBoolean($arg){
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class AFTCDirBrowser
-{
+{    
+    // Configuration options
+    public $enable_self_update = true;
+    public $animate_bg = true;
+    public $image_mode = true;
+
     public $local_version = "[version]";
     public $online_version = "";
-    public $enable_self_update = true;
-    public $image_mode = true;
 
     public $url;
     public $dir;
@@ -66,11 +69,11 @@ class AFTCDirBrowser
             $online_cfg = json_decode($online_cfg);
             $this->online_version = (double) $online_cfg->version;
             $this->local_version = (double) $this->local_version;
-            trace("online_version = " . $this->online_version);
-            trace("local_version = " . $this->local_version);
-            trace(gettype($this->online_version)); // double
-            trace(gettype($this->local_version)); // double
-            die();
+            // trace("online_version = " . $this->online_version);
+            // trace("local_version = " . $this->local_version);
+            // trace(gettype($this->online_version)); // double
+            // trace(gettype($this->local_version)); // double
+            // die();
             // Check datatypes
             if (gettype($this->online_version) == "double" && gettype($this->online_version) == "double"){
                 // check if newer online
@@ -461,7 +464,7 @@ $aftc = new AFTCDirBrowser();
 
         <script>
             var imageMode = <?php outBoolean($aftc->image_mode); ?>;
-            var animateBg = <?php outBoolean($aftc->image_mode); ?>;
+            var animateBg = <?php outBoolean($aftc->animate_bg); ?>;
             var OpenFilesInNewTab = <?php outBoolean(OPEN_FILES_IN_NEW_TAB); ?>;
 
             function navigateTo(url) {
