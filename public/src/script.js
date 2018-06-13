@@ -70,6 +70,22 @@ var AFTCFileBrowserBackground = function () {
             params.halfH = params.h / 2;
         });
 
+
+        var elements = document.getElementsByClassName("img-container");
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            var bgContainer = element.getElementsByClassName("bg-container")[0];
+            var src = element.getAttribute("data-link");
+            // log(src);
+            bgContainer.style.backgroundImage = "url(\"" + src + "\")";
+            //log(element);
+
+            // var img = new Image();
+            // img.src = src;
+            // img.classList.add("img-preview");
+            // element.appendChild(img);
+        }
+
     }
 
 

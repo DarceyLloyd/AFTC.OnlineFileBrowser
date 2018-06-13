@@ -12,6 +12,8 @@ define("OPEN_FILES_IN_NEW_TAB", true);
 class AFTCDirBrowser
 {
     public $version = "[version]";
+    public $image_mode = true;
+
     public $url;
     public $dir;
     public $browser_title;
@@ -114,18 +116,6 @@ class AFTCDirBrowser
             }
         }
 
-
-//        trace("this->url = " . $this->url);
-//        trace("this->browser_title = " . $this->browser_title);
-//        trace("this->aftc_browser_file_name = " . $this->aftc_browser_file_name);
-//        trace("this->folder_path_is_set = " . $this->folder_path_is_set);
-//        trace("this->nav_path = " . $this->nav_path);
-//        trace("this->dir = " . $this->dir);
-//        trace("this->current_file = " . $this->current_file);
-
-        // Check server path with url path is a valid dir or file
-        // print_r("this->dir = " . $this->dir . "\n");
-
         if (is_dir($this->dir)) {
             if (file_exists($this->dir)) {
                 // We have a directory!
@@ -177,15 +167,15 @@ class AFTCDirBrowser
                     $in = "";
                     if ($osize > 1073741824) {
                         // GB
-                        $in = " GB";
+                        $in = "GB";
                         $size = $osize / 1024 / 1024 / 1024;
                     } else if ($osize > 1048576) {
                         // MB
-                        $in = " mb";
+                        $in = "Mb";
                         $size = $osize / 1024 / 1024;
                     } else {
                         // KB
-                        $in = " kb";
+                        $in = "kb";
                         $size = $osize / 1024;
                     }
                     $size = number_format((float)$size, 1, '.', '');
@@ -224,22 +214,21 @@ class AFTCDirBrowser
 
         foreach ($this->dirs as $key => $value) {
             //echo($key . " = " . $value . "<br>");
-            $directory = str_replace($this->url . "\\", "", $value);
-            $nice_name = $directory;
+            $dirName = str_replace($this->url . "\\", "", $value);
 
             if ($this->nav_path != "") {
-                $link = $this->url . "?f=" . urlencode($this->nav_path) . "/" . urlencode($directory);
+                $link = $this->url . "?f=" . urlencode($this->nav_path) . "/" . urlencode($dirName);
             } else {
-                $link = $this->url . "?f=" . urlencode($directory);
+                $link = $this->url . "?f=" . urlencode($dirName);
             }
 
-            $html_link = "<a href='" . $link . "' class='file-link'>" . $directory . "</a>";
+            $html_link = "<a href='" . $link . "' class='dir-link'>" . $dirName . "</a>";
 
             //trace($link);
             $html .= "<tr>\n";
             // $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>" . $link . " - " . $directory . "</td>\n";
             // $html .= "<td class='list-col list-col1 btn' onclick='navigateToFolder(\"" . $link . "\");'>" . $directory . "</td>\n";
-            $html .= "<td class='list-col list-col1 btn'>" . $html_link . "</td>\n";
+            $html .= "<td class=''>" . $html_link . "</td>\n";
             
             $html .= "</tr>\n";
         }
@@ -252,31 +241,77 @@ class AFTCDirBrowser
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public function listFiles()
     {
-        foreach ($this->files as $key => $value) {
-            $file = str_replace($this->url . "\\", "", $value);
-            $nice_name = $file;
-            $file = htmlspecialchars($file, ENT_QUOTES);
-            if ($this->nav_path != "") {
-                $link = $this->url . str_replace($this->current_file, "", $this->nav_path) . "/" . $file;
-            } else {
-                $link = $this->url . $file;
+        $html = "";
+        $html = "<table width='100%' border='0' cellspacing='1' cellpadding='0' id='list-table'>\n";
+        $html .= "<tr>\n";
+            // $html .= "<th class='head-col-1'>Preview</th>";
+            $html .= "<th class='col-head-1'>File name</th>\n";
+            $html .= "<th class='col-head-2'>Size</th>\n";
+        $html .= "</tr>\n";
+
+        if (sizeof($this->files) > 0) {
+            // There be files here!
+
+            $img = "";
+            $cnt = 0;
+            foreach ($this->files as $key => $value) {
+                $fileName = str_replace($this->url . "\\", "", $value);
+                $fileName = htmlspecialchars($fileName, ENT_QUOTES);
+                if ($this->nav_path != "") {
+                    $link = $this->url . str_replace($this->current_file, "", $this->nav_path) . "/" . $fileName;
+                } else {
+                    $link = $this->url . $fileName;
+                }
+
+                // trace("this->current_file = " . $this->current_file);
+                // trace("fileName = " . $fileName);
+            
+                $target = "";
+                if (OPEN_FILES_IN_NEW_TAB) {
+                    $target = "target='_blank'";
+                }
+
+
+                if ($this->image_mode){
+            
+                $info = new SplFileInfo($fileName);
+                $ext = strtolower( $info->getExtension() );
+                $isImage = false;
+                if ($ext == "gif" || $ext == "jpg" || $ext == "png" || $ext == "bmp" || $ext == "jpeg" || $ext == "svg"){
+                    $isImage = true;
+                }
+
+                $img = "";
+                if ($isImage){
+                    // Image and file links
+                    // $img = "<div class='img-container'><image src='" . $link . "' class='img-preview' /></div>";
+                    $cnt++;
+                    $uid = "img" . $cnt;
+                    $img = "<div class='img-container' data-link='" . $link . "'><div class='bg-container'></div></div>";
+                }
             }
 
-            if (OPEN_FILES_IN_NEW_TAB) {
-                $html_link = "<a href='" . $link . "' target='_blank' class='file-link'>" . $nice_name . "</a>";
-            } else {
-                $html_link = "<a href='" . $link . "' class='file-link'>" . $nice_name . "</a>";
-            }
+            $linkS = "<a href='" . $link . "' " . $target . " class='list-link'>";
+            $linkE = "</a>\n";
 
-            echo("<tr>\n");
-            $title = "";
-            //echo("<td class='list-col list-col1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $link . " - " . $file . "</td>\n");
+            $html .= "<tr>\n";
+                $html .= "<td class='col-list-1'>" . $linkS . $img . $fileName . $linkE . "</td>\n";
+                $html .= "<td class='col-list-2'>" . $this->file_sizes[$key] . "</td>\n";
+            $html .= "</tr>\n";
 
-            // echo("<td class='col-1 btn' title='".$title."' onclick='navigateTo(\"" . $link . "\");'>" . $html_link . "</td>\n");
-            echo("<td class='col-1 btn' title='".$title."'>" . $html_link . "</td>\n");
-            echo("<td class='col-2 file-size-col'>" . $this->file_sizes[$key] . "</td>\n");
-            echo("</tr>\n");
+            } // end foreach
+            
+
+        } else {
+            // Nothing to see here, move along...
+            $html .= "<tr>\n";
+                $html .= "<td class='col-list-1'><h3 class='no-files'>No files found</h3></td>\n";
+                $html .= "<td class='col-list-2'>&nbsp;</td>\n";
+            $html .= "</tr>\n";
         }
+        $html .= "</table>\n";
+        echo($html);
+        
     }
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -426,16 +461,7 @@ $aftc = new AFTCDirBrowser();
             </table>
         <?php } ?>
 
-
-        <?php if (sizeof($aftc->files) > 0) { ?>
-            <table id="list-table">
-                <tr>
-                    <th class="col-1">File names</th>
-                    <th class="col-2">Size</th>
-                </tr>
-                <?php $aftc->listFiles(); ?>
-            </table>
-        <?php } ?>
+        <?php $aftc->listFiles(); ?>
 
         <div id="footer">
             &copy; Data &amp; Dreams LTD | email: <a href="mailto:darcey@aftc.io" target="_blank">Darcey@aftc.io</a>

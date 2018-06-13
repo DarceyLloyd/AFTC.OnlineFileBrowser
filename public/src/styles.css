@@ -1,6 +1,7 @@
 html, body {
     font-family: Arial, Verdana, "Times New Roman";
     background: #FFFFFF;
+    box-sizing: border-box;
 }
 
 * {
@@ -10,9 +11,20 @@ html, body {
     transition-duration: 250ms;
 }
 
+img {
+    display: block;
+    border: none;
+    outline: none;
+}
 
 
+.preview {
+    max-width: 100px;
+}
 
+.preview:hover {
+    max-width: 140px;
+}
 
 
 .small {
@@ -45,28 +57,10 @@ a:visited {
 
 
 
-.file-link {
-    display: block;
-    padding: 5px 10px 5px 15px;
-    font-size: 14px;
-    background: RGBA(200,200,200,0.8);
-    text-decoration: none;
-    color: #000000;
-}
-
-.file-link:hover  {
-    color: #FFFFFF;
-    background: RGBA(50,0,0,0.95);
-    text-decoration: underline;
-}
 
 
 
-.file-size-col {
-    background: RGBA(200,200,200,0.8);
-    text-decoration: none;
-    color: #000000;
-}
+
 
 
 
@@ -206,40 +200,19 @@ a:visited {
 
 
 
-.up-link {
-    font-size: 14px !important;
-    font-weight: bold;
-    cursor: pointer;
-    display: block;
-    padding: 5px 10px 5px 15px;
-    font-size: 14px;
-    background: RGBA(200,200,200,0.8);
-    text-decoration: none;
-    color: #000000;
-}
 
-.up-link:hover {
-    color: #FFFFFF;
-    background: RGBA(50,0,0,0.95);
-}
+
+
+
+
+
+
 
 
 #list-table {
     width: 100%;
     text-align: left;
     user-select: none;
-}
-
-#list-table .col-1 {
-
-}
-
-#list-table .col-2 {
-    width: 80px;
-}
-
-#list-table th, #list-table td {
-
 }
 
 #list-table th {
@@ -250,16 +223,158 @@ a:visited {
     background: RGBA(0,0,0,0.9);
 }
 
-#list-table td {
-    /* padding: 5px 10px 5px 15px;
-    font-size: 14px;
-    background: RGBA(200,200,200,0.8); */
+#list-table .col-head-1 {
+    
 }
 
-#list-table td:hover {
-    /* color: #FFFFFF;
-    background: RGBA(50,0,0,0.95); */
+#list-table .col-head-2 {
+    width: 85px;
+    padding: 5px 10px 5px 5px;
 }
+
+#list-table .col-list-1 {
+
+}
+
+#list-table .col-list-2 {
+    width: 80px;
+    display: block;
+    font-size: 18px;
+    padding: 5px 10px 5px 10px;
+    font-size: 14px;
+    background: RGBA(200,200,200,0.8);
+    color: #000000;
+}
+
+#list-table th, #list-table td {
+
+}
+
+
+
+
+
+
+.img-container {
+    display: inline-block;
+    width: 100px !important;
+    height: 100px !important;
+    overflow: hidden;
+    background: RGBA(255,255,255,0.8);
+    margin-right: 10px !important;
+}
+
+
+
+.bg-container {
+    width: 100px !important;
+    height: 100px !important;
+    transform-origin: 50% 50%;
+    width: 100px !important;
+    background-size: cover;
+    background-origin: 50% 50%;
+}
+
+.bg-container:hover {
+    transform: scale(1.2);
+}
+
+
+
+.img-container .img-preview {
+    transform-origin: 50% 50%;
+    width: 100px !important;
+    
+}
+
+.img-container .img-preview:hover {
+    transform: scale(1.2);
+}
+
+
+
+
+
+
+
+
+.up-link {
+    font-size: 12px !important;
+    font-weight: bold;
+    font-style: italic;
+    cursor: pointer;
+    display: block;
+    padding: 5px 10px 5px 15px;
+    font-size: 14px;
+    background: RGBA(200,200,200,0.7);
+    text-decoration: none;
+    color: #000000;
+}
+
+.up-link:hover {
+    color: #FFFFFF;
+    background: RGBA(50,0,0,0.95);
+    text-decoration: none;
+}
+
+
+
+
+
+.no-files {
+    display: block;
+    padding: 5px 10px 5px 15px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    background: RGBA(200,200,200,0.8);
+    color: #000000;
+    text-decoration: none;
+}
+
+
+
+
+.dir-link {
+    display: block;
+    padding: 5px 10px 5px 15px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    background: RGBA(200,200,200,0.8);
+    color: #000000;
+    text-decoration: none;
+}
+
+.dir-link:hover {
+    color: #FFFFFF;
+    background: RGBA(50,0,0,0.95);
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+.list-link {
+    display: block;
+    font-size: 18px;
+    padding: 5px 10px 5px 15px;
+    margin: 0;
+    font-size: 14px;
+    background: RGBA(200,200,200,0.8);
+    color: #000000;
+    text-decoration: none;
+}
+
+.list-link:hover {
+    color: #FFFFFF;
+    background: RGBA(50,0,0,0.95);
+    text-decoration: none;
+}
+
 
 
 
@@ -270,10 +385,9 @@ a:visited {
 #footer {
     margin-top: 10px;
     padding: 10px;
-    background: RGBA(50,0,0,0.95);
+    background: RGBA(50,0,0,0.85);
     font-size: 11px;
     color: #FFFFFF;
-    opacity: 0.75;
 }
 
 #footer a {
@@ -290,9 +404,15 @@ a:visited {
 @media (min-width: 1px) and (max-width: 700px) {
 }
 
-@media (max-width: 450px) {
+@media (max-width: 640px) {
 
+    #list-table .col-head-2 {
+        display: none;
+    }
 
+    #list-table .col-list-2 {
+        display: none;
+    }
 
     #list-table .col-2 {
         padding: 2px;
@@ -301,28 +421,8 @@ a:visited {
         text-align: center;
     }
 
-    /* #list-table th {
-        padding: 5px 10px 5px 5px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #FFFFFF;
-        background: RGBA(0,0,0,0.9);
-    }
-
-    #list-table td {
-        padding: 5px 10px 5px 10px;
-        font-size: 18px;
-        color: #000000;
-        background: RGBA(200,200,200,0.8);
-    }
-
-    #list-table td:hover {
-        color: #FFFFFF;
-        background: RGBA(50,0,0,0.95);
-    } */
 
     #list-table th {
-
         font-size: 18px;
         font-weight: bold;
         color: #FFFFFF;
@@ -338,6 +438,9 @@ a:visited {
         font-size: 12px !important;
     }
 
+    .crumb {
+        font-size: 14px !important;
+    }
 
 }
 

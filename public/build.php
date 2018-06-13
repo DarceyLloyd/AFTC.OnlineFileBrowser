@@ -26,9 +26,9 @@ $composer = json_decode($composer);
 // echo($composer->version);
 // die();
 //$css = file_get_contents("./src/styles.css");
-//$js = file_get_contents("./src/script.js");
+$js = file_get_contents("./src/script.js");
 $css = minify("./src/styles.css");
-$js = minify("./src/script.js");
+// $js = minify("./src/script.js");
 
 
 
