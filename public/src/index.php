@@ -57,8 +57,8 @@ class AFTCDirBrowser
             $online_cfg = json_decode($online_cfg);
             $this->online_version = (double) $online_cfg->version;
             $this->local_version = (double) $this->local_version;
-            trace("online_version = " . $this->online_version);
-            trace("local_version = " . $this->local_version);
+            // trace("online_version = " . $this->online_version);
+            // trace("local_version = " . $this->local_version);
             // trace(gettype($this->online_version)); // double
             // trace(gettype($this->local_version)); // double
             // die();
@@ -482,9 +482,8 @@ $aftc = new AFTCDirBrowser();
 
     <div id="layer3">
         <div id="header">
-            <h1>AFTC - Online Directory &amp; File Browser</h1>
-            <h2>For support email <a href="mailto:Darcey@aftc.io"
-                                     target="_blank">Darcey@aftc.io</a></h2>
+            <h1>AFTC - Online File Browser V<?php echo($aftc->local_version); ?></h1>
+            <h2>For support email <a href="mailto:Darcey@aftc.io" target="_blank">Darcey@aftc.io</a></h2>
         </div>
 
         <div id="debug"></div>

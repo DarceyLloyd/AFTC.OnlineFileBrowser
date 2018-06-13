@@ -45,7 +45,6 @@ $mainFile = str_replace("//[JS]",$js,$mainFile);
 deleteFile("./bin/styles.css");
 deleteFile("./bin/script.js");
 file_put_contents("./bin/index.php",$mainFile);
-file_put_contents("./bin/index.txt",$mainFile);
 
 echo("AFTC: If all went well you should now have a bin directory with an index.php file you can use!");
 

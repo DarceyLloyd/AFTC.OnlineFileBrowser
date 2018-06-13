@@ -47,6 +47,8 @@ var AFTCFileBrowserBackground = function () {
         params.mousePos.x = params.halfW;
         params.mousePos.y = params.halfH;
 
+        return;
+
         // params.ctx1.beginPath();
         // params.ctx1.fillStyle = "RGBA(0,0,0,0.5)";
         // params.ctx1.fillRect(5, 5, params.w - 5, params.h - 5);
