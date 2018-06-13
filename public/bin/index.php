@@ -11,7 +11,7 @@ define("OPEN_FILES_IN_NEW_TAB", true);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class AFTCDirBrowser
 {
-    public $local_version = "1.3";
+    public $local_version = "1.4";
     public $online_version = "";
     public $enable_self_update = true;
     public $image_mode = true;
@@ -45,13 +45,15 @@ class AFTCDirBrowser
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public function __construct()
     {
+        // Ensure we dont accidentally update src
+        $GoodChanceOfUpdatingSrc = false;
+        if (file_exists("./script.js") && file_exists("./styles.js") && file_exists("./.gitignore")){
+            $GoodChanceOfUpdatingSrc = true;
+        }
+
         // Check auto update
-        if ($this->enable_self_update){
-            // Ensure we dont accidentally update src
-            if (file_exists("./script.js") && file_exists("./styles.js") && file_exists("./.gitignore")){
-                trace("HIGH CHANCE YOUR UPDATING SOURCE - UPDATE BLOCKED");
-                die();
-            }
+        if ($this->enable_self_update && !$GoodChanceOfUpdatingSrc){
+            
             
             $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json");
             $online_cfg = json_decode($online_cfg);
@@ -66,20 +68,26 @@ class AFTCDirBrowser
             if (gettype($this->online_version) == "double" && gettype($this->online_version) == "double"){
                 // check if newer online
                 if ($this->online_version > $this->local_version){
-                    trace("UPDATE AVAILABLE");
+                    // trace("UPDATE AVAILABLE");
                     $html = "<html>";
                     $html .= "<head>";
+                    $html .= "<style>";
+                    $html .= "body { font-family: arial; font-size:14px; padding: 50px;}";
+                    $html .= "</style>";
                     $html .= "<script>";
                     $html .= "function reload(){";
                     $html .= "self.location.href = self.location.href;";
                     $html .= "}";
                     $html .= "function init(){";
-                    $html .= "setTimeout(reload,1500)";
+                    $html .= "setTimeout(reload,3000)";
                     $html .= "}";
                     $html .= "</script>";
                     $html .= "<body onload='init()'>";
-                    $html .= "<h3>Self updating, please wait...</h3>";
-                    $html .= "<a href='javascript:reload()'>If you are not redirected shortly, please click here</a>";
+                    $html .= "<div align='center'><h1>AFTC Online File Browser - Update Available!</h1></div>";
+                    $html .= "<div align='center'><h3>Please wait... I am self updating...</h3></div>";
+                    $html .= "<div align='center'>If you are not redirected shortly, please <a href='javascript:reload()'>click here</a>.</div>";
+                    $html .= "<hr><div align='center'>If you are experiencing technical issues, please email <a href='mailto:Darcey@aftc.io'>Darcey@aftc.io</a>, detailing as your issue and how I can replicate your issue.</div>";
+                    $html .= "";
                     $html .= "</body>";
                     $html .= "</head>";
                     $html .= "</html>";
