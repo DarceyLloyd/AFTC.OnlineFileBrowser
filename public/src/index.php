@@ -65,19 +65,8 @@ class AFTCDirBrowser
     public function __construct()
     {
         if ($this->secure) {
-            // var_dump($_SESSION);
-            // trace("<hr>");
-            // trace("SECURE!");
-            // trace("code = " . getSession("aftc_file_browser_state"));
-            //die();
-
-
-
             if (getSession("aftc_file_browser_state") === $this->session_code) {
                 $this->loggedin = true;
-                // trace("User is logged in!");
-            } else {
-                // trace("User is not logged in!");
             }
 
             if ($_SERVER["REQUEST_METHOD"] !== "POST" && !$this->loggedin) {
