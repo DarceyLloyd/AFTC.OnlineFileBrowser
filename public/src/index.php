@@ -22,7 +22,7 @@ class AFTCDirBrowser
     // Configuration options
     public $enable_self_update = true;
 
-    public $secure = true;
+    public $secure = false;
 
     // Please change the next 3 lines per each use of this file browser (if in sercure mode)
     public $username = "Darcey";
