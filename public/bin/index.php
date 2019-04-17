@@ -34,7 +34,7 @@ class AFTCDirBrowser
     public $image_mode = false;
     public $hide_bg = false;
 
-    public $local_version = "1.11";
+    public $local_version = "1.12";
     public $online_version = "";
 
     public $url;
@@ -110,13 +110,24 @@ class AFTCDirBrowser
         }
 
         // Ensure we dont accidentally update src
+        // NOTE TO SELF: ???????
         $GoodChanceOfUpdatingSrc = false;
         if (file_exists("./script.js") && file_exists("./styles.js") && file_exists("./.gitignore")) {
             $GoodChanceOfUpdatingSrc = true;
         }
 
+
         // Check auto update
-        if ($this->enable_self_update && !$GoodChanceOfUpdatingSrc) {
+        $isLocal = false;
+        
+        // Disable auto update on local host
+
+        if (substr($_SERVER['REMOTE_ADDR'], 0, 4) == '127.' || $_SERVER['REMOTE_ADDR'] == '::1') {
+            $isLocal = true;
+        }
+
+        // Check auto update
+        if (!$isLocal && $this->enable_self_update && !$GoodChanceOfUpdatingSrc) {
             $r = rand(0, 9999999);
             $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json?v=" . $r);
             $online_cfg = json_decode($online_cfg);
