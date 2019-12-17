@@ -1,4 +1,4 @@
 AuthType Basic
 AuthName "TestUser"
-AuthUserFile ./.htpasswd
+AuthUserFile W:/www/GIT/AFTC.OnlineFileBrowser/ht_secured/sec/.htpasswd
 Require valid-user

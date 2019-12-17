@@ -27,7 +27,7 @@ class AFTCDirBrowser
     // Please change the next 3 lines per each use of this file browser (if in sercure mode)
     public $username = "Darcey";
     public $password = "1234";
-    public $session_code = "010200100210275012974301928301927591287041283986589127509";
+    public $session_code = "ASP{OGIUAS{G)PJASN{PGOIAOPSNJOAPOS{DKMP{ASOGJN)ASIGJUANSP{IGM_ASIUGM)ASJGHMPOAISKGSA)(IGNA{S)(GIUJA_S{})ID{M<_AS(UGN{)AS(UGN{_)AS";
     private $loggedin = false;
 
     public $animate_bg = false;
@@ -119,7 +119,7 @@ class AFTCDirBrowser
 
         // Check auto update
         $isLocal = false;
-        
+
         // Disable auto update on local host
 
         if (substr($_SERVER['REMOTE_ADDR'], 0, 4) == '127.' || $_SERVER['REMOTE_ADDR'] == '::1') {
@@ -517,8 +517,8 @@ if ($pos === false) {
             var imageMode = <?php outBoolean($aftc->image_mode);?>;
             var animateBg = <?php outBoolean($aftc->animate_bg);?>;
             var OpenFilesInNewTab = <?php outBoolean(OPEN_FILES_IN_NEW_TAB);?>;
-            
-            function init(){                
+
+            function init(){
                 if (hideBg){
                     document.getElementById("layer1").style.display = "none";
                     document.getElementById("layer2").style.display = "none";
@@ -582,7 +582,7 @@ $aftc->ouputBreadcrumbs();
         </table>
 
         <div id="footer">
-            &copy; Data &amp; Dreams LTD | email: <a href="mailto:darcey@aftc.io" target="_blank">Darcey@aftc.io</a>
+            &copy; AFTC LTD | email: <a href="mailto:darcey@aftc.io" target="_blank">Darcey@aftc.io</a>
         </div>
 
     </div>
