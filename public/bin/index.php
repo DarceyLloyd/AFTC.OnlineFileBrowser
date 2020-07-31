@@ -34,7 +34,7 @@ class AFTCDirBrowser
     public $image_mode = false;
     public $hide_bg = false;
 
-    public $local_version = "1.14";
+    public $local_version = "1.15";
     public $online_version = "";
 
     public $url;
