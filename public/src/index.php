@@ -85,11 +85,11 @@ class AFTCDirBrowser
                     </body>
                 </html>
                 ";
-                echo($html);
+                echo ($html);
                 die();
             } else if ($_SERVER["REQUEST_METHOD"] === "POST" && !$this->loggedin) {
                 // POST and NOT LOGGED IN = Validate POST DATA FOR LOGIN
-                if ((getPost("username") === $this->username) && (getPost("password") === $this->password)){
+                if ((getPost("username") === $this->username) && (getPost("password") === $this->password)) {
                     // Log them in
                     $_SESSION["aftc_file_browser_state"] = $this->session_code;
                 } else {
@@ -100,13 +100,11 @@ class AFTCDirBrowser
                     <p>Please refresh page to try again.</p>
                     </body>
                     </html>";
-                    echo($html);
+                    echo ($html);
                     die();
                 }
-            } else if ($this->loggedin){
-
+            } else if ($this->loggedin) {
             }
-
         }
 
         // Ensure we dont accidentally update src
@@ -131,8 +129,8 @@ class AFTCDirBrowser
             $r = rand(0, 9999999);
             $online_cfg = file_get_contents("https://raw.githubusercontent.com/DarceyLloyd/AFTC.OnlineFileBrowser/master/public/composer.json?v=" . $r);
             $online_cfg = json_decode($online_cfg);
-            $this->online_version = (double) $online_cfg->version;
-            $this->local_version = (double) $this->local_version;
+            $this->online_version = (float) $online_cfg->version;
+            $this->local_version = (float) $this->local_version;
             // trace("online_version = " . $this->online_version);
             // trace("local_version = " . $this->local_version);
             // trace(gettype($this->online_version)); // double
@@ -160,7 +158,7 @@ class AFTCDirBrowser
                     $html .= "<div align='center'><h1>AFTC Online File Browser - Update Available!</h1></div>";
                     $html .= "<div align='center'><h3>Please wait... I am self updating...</h3></div>";
                     $html .= "<div align='center'>If you are not redirected shortly, please <a href='javascript:reload()'>click here</a>.</div>";
-                    $html .= "<hr><div align='center'>If you are experiencing technical issues, please email <a href='mailto:Darcey@aftc.io'>Darcey@aftc.io</a>, detailing as your issue and how I can replicate your issue.</div>";
+                    $html .= "<hr><div align='center'>If you are experiencing technical issues, please email <a href='mailto:Darcey@aftc.io'>Darcey@aftc.io</a>, detailing how I can replicate your issue.</div>";
                     $html .= "";
                     $html .= "</body>";
                     $html .= "</head>";
@@ -172,7 +170,6 @@ class AFTCDirBrowser
                     die();
                 }
             }
-
         }
 
         // Fully qualified names ignore rules
@@ -252,7 +249,6 @@ class AFTCDirBrowser
                 echo ("AFTC Directory Browser - Directory no longer exists");
                 die;
             }
-
         } else if (is_file($this->dir)) {
             // we have a file!
             $target = ($this - url . $this->nav_path);
@@ -313,12 +309,10 @@ class AFTCDirBrowser
                     //var_dump($this->dir . "\\" . $value);
                 }
             }
-
         }
 
         natcasesort($this->dirs);
         natcasesort($this->files);
-
     }
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -415,7 +409,6 @@ class AFTCDirBrowser
                 $html .= "<td class='col-list-1'>" . $linkS . $img . $fileName . $linkE . "</td>\n";
                 $html .= "<td class='col-list-2'>" . $this->file_sizes[$key] . "</td>\n";
                 $html .= "</tr>\n";
-
             } // end foreach
 
         } else {
@@ -426,7 +419,6 @@ class AFTCDirBrowser
             $html .= "</tr>\n";
         }
         echo ($html);
-
     }
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -485,61 +477,64 @@ $aftc = new AFTCDirBrowser();
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-        <meta name="google" content="notranslate">
-        <meta name="robots" content="noindex">
-        <meta name="language" content="English">
-        <meta http-equiv="content-language" content="en">
-        <title><?php echo ($aftc->browser_title); ?></title>
-        <meta description="AFTC Directory & File Browser - By Darcey@aftc.io"/>
-        <meta author="Darcey@aftc.io"/>
-        <?php
-$pos = strrpos(__DIR__, "src");
-if ($pos === false) {
-    //trace("BIN BUILD");
-} else {
-    //trace("SRC BUILD");
-    echo ("<link rel='stylesheet' type='text/css' href='./styles.css'>\n");
-}
-?>
-        <style>
-            [CSS]
-        </style>
+<!DOCTYPE html>
+<html lang="en">
 
-        <script>
-            function log(arg){ console.log(arg); }
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="google" content="notranslate">
+    <meta name="robots" content="noindex">
+    <meta name="language" content="English">
+    <meta http-equiv="content-language" content="en">
+    <title><?php echo ($aftc->browser_title); ?></title>
+    <meta author="Darcey@aftc.io" />
+    <?php
+    $pos = strrpos(__DIR__, "src");
+    if ($pos === false) {
+        //trace("BIN BUILD");
+    } else {
+        //trace("SRC BUILD");
+        echo ("<link rel='stylesheet' type='text/css' href='./styles.css'>\n");
+    }
+    ?>
+    <style>
+        [CSS]
+    </style>
 
-            var hideBg = <?php outBoolean($aftc->hide_bg);?>;
-            var imageMode = <?php outBoolean($aftc->image_mode);?>;
-            var animateBg = <?php outBoolean($aftc->animate_bg);?>;
-            var OpenFilesInNewTab = <?php outBoolean(OPEN_FILES_IN_NEW_TAB);?>;
+    <script>
+        function log(arg) {
+            console.log(arg);
+        }
 
-            function init(){
-                if (hideBg){
-                    document.getElementById("layer1").style.display = "none";
-                    document.getElementById("layer2").style.display = "none";
-                }
+        var hideBg = <?php outBoolean($aftc->hide_bg); ?>;
+        var imageMode = <?php outBoolean($aftc->image_mode); ?>;
+        var animateBg = <?php outBoolean($aftc->animate_bg); ?>;
+        var OpenFilesInNewTab = <?php outBoolean(OPEN_FILES_IN_NEW_TAB); ?>;
+
+        function init() {
+            if (hideBg) {
+                document.getElementById("layer1").style.display = "none";
+                document.getElementById("layer2").style.display = "none";
             }
+        }
 
-            function navigateTo(url) {
-                if (!OpenFilesInNewTab) {
-                    self.location.href = url;
-                } else {
-                    var win = window.open(url, '_blank');
-                    win.focus();
-                }
-            }
-
-            function navigateToFolder(url) {
+        function navigateTo(url) {
+            if (!OpenFilesInNewTab) {
                 self.location.href = url;
+            } else {
+                var win = window.open(url, '_blank');
+                win.focus();
             }
-        </script>
-    </head>
-    <body onload="init()">
+        }
+
+        function navigateToFolder(url) {
+            self.location.href = url;
+        }
+    </script>
+</head>
+
+<body onload="init()">
 
     <div id="layer1">
         <canvas id="canvas1"></canvas>
@@ -552,7 +547,6 @@ if ($pos === false) {
     <div id="layer3">
         <div id="header">
             <h1>AFTC - Online File Browser <span style='font-size:9px;'>v<?php echo ($aftc->local_version); ?></span></h1>
-            <h2>For support email <a href="mailto:Darcey@aftc.io" target="_blank">Darcey@aftc.io</a></h2>
         </div>
 
         <div id="debug"></div>
@@ -560,51 +554,52 @@ if ($pos === false) {
 
         <div id="location">
             <?php
-$aftc->ouputBreadcrumbs();
-?>
+            $aftc->ouputBreadcrumbs();
+            ?>
         </div>
 
-        <?php if (sizeof($aftc->dirs) > 0 || $aftc->folder_path_is_set) {?>
+        <?php if (sizeof($aftc->dirs) > 0 || $aftc->folder_path_is_set) { ?>
             <table id="list-table">
                 <tr>
                     <th>Directories</th>
                 </tr>
-                <?php $aftc->listDirectories();?>
+                <?php $aftc->listDirectories(); ?>
             </table>
-        <?php }?>
+        <?php } ?>
 
         <table width='100%' border='0' cellspacing='1' cellpadding='0' id='list-table'>
-        <tr>
-            <th class='col-head-1'>Files</th>
-            <th class='col-head-2'>Size</th>
-        </tr>
-        <?php $aftc->listFiles();?>
+            <tr>
+                <th class='col-head-1'>Files</th>
+                <th class='col-head-2'>Size</th>
+            </tr>
+            <?php $aftc->listFiles(); ?>
         </table>
 
         <div id="footer">
-            &copy; AFTC LTD | email: <a href="mailto:darcey@aftc.io" target="_blank">Darcey@aftc.io</a>
+            &copy; AFTC LTD <?php echo(date("Y")); ?> | Email: <a href="mailto:darcey@aftc.io" target="_blank">Darcey@aftc.io</a>
         </div>
 
     </div>
 
 
     <?php
-$pos = strrpos(__DIR__, "src");
-if ($pos === false) {
-    //trace("BIN BUILD");
-} else {
-    //trace("SRC BUILD");
-    echo ("<script src=\"script.js\" type=\"text/javascript\"></script>\n");
-}
-?>
+    $pos = strrpos(__DIR__, "src");
+    if ($pos === false) {
+        //trace("BIN BUILD");
+    } else {
+        //trace("SRC BUILD");
+        echo ("<script src=\"script.js\" type=\"text/javascript\"></script>\n");
+    }
+    ?>
 
 
     <script>
         //[JS]
     </script>
 
-    </body>
-    </html>
+</body>
+
+</html>
 <?php
 
 // Function utilities
@@ -634,16 +629,18 @@ function outBoolean($arg)
     }
 }
 
-function getPost($index){
-    if (isset($_POST[$index])){
+function getPost($index)
+{
+    if (isset($_POST[$index])) {
         return $_POST[$index];
     } else {
         return null;
     }
 }
 
-function getSession($index){
-    if (isset($_SESSION[$index])){
+function getSession($index)
+{
+    if (isset($_SESSION[$index])) {
         return $_SESSION[$index];
     } else {
         return null;
