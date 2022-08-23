@@ -191,6 +191,9 @@ class AFTCDirBrowser
         $this->protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
         //$this->url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $this->url = $this->protocol . "://$_SERVER[HTTP_HOST]" . strtok($_SERVER["REQUEST_URI"], '?');
+
+        // die($_SERVER["REQUEST_URI"]);
+        // die($this->url);
         $this->root = $this->url;
         $this->browser_title = "AFTC Dir & File Browser - Darcey@aftc.io";
         $this->aftc_browser_file_name = basename($_SERVER["SCRIPT_FILENAME"]);
@@ -251,7 +254,7 @@ class AFTCDirBrowser
             }
         } else if (is_file($this->dir)) {
             // we have a file!
-            $target = ($this - url . $this->nav_path);
+            $target = ($this->url . $this->nav_path);
             //echo("AFTC Directory Browser - FILE FOUND!");
             //echo("ATTEMPTING TO REDIRECT TO [" . $target . "]");
 
@@ -331,14 +334,16 @@ class AFTCDirBrowser
             $html .= "</tr>\n";
         }
 
+        $script = basename(__FILE__);
+
         foreach ($this->dirs as $key => $value) {
             //echo($key . " = " . $value . "<br>");
             $dirName = str_replace($this->url . "\\", "", $value);
 
             if ($this->nav_path != "") {
-                $link = $this->url . "?f=" . urlencode($this->nav_path) . "/" . urlencode($dirName);
+                $link = $this->url . $script . "?f=" . urlencode($this->nav_path) . "/" . urlencode($dirName);
             } else {
-                $link = $this->url . "?f=" . urlencode($dirName);
+                $link = $this->url . $script . "?f=" . urlencode($dirName);
             }
 
             $html_link = "<a href='" . $link . "' class='dir-link'>" . $dirName . "</a>";
@@ -374,6 +379,17 @@ class AFTCDirBrowser
                 } else {
                     $link = $this->url . $fileName;
                 }
+
+                // echo ("<pre>");
+                // $data = [
+                //     $this->url,
+                //     $this->current_file,
+                //     $fileName,
+                //     $link
+                // ];
+                // var_dump($data);
+                // echo ("</pre>");
+                // die();
 
                 // trace("this->current_file = " . $this->current_file);
                 // trace("fileName = " . $fileName);

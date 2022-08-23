@@ -64,7 +64,6 @@ function minifyCSS($file){
         while (($line = fgets($handle)) !== false) {
             // process the line read.
             //$line = preg_replace("/[\r\n\t]+/", " ", $line); // Remove newlines & tabs
-            $i;
             for ($i=0; $i<10; $i++){
                 $line = str_replace("\n"," ",$line); // Minification step
                 $line = str_replace("\r"," ",$line); // Minification step
@@ -80,7 +79,7 @@ function minifyCSS($file){
         fclose($handle);
     }
 
-    return $out;    
+    return $out;
 }
 
 
@@ -89,7 +88,7 @@ function minify($file){
 
     $js = file_get_contents($file);
     $jz = new JSqueeze();
-    
+
     $minified = $jz->squeeze(
         $js,
         true,   // $singleLine
@@ -150,20 +149,20 @@ function deleteDir($dirPath) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-function copyFolderAndContents($src,$dst) { 
-    $dir = opendir($src); 
-    @mkdir($dst); 
-    while(false !== ( $file = readdir($dir)) ) { 
-        if (( $file != '.' ) && ( $file != '..' )) { 
-            if ( is_dir($src . '/' . $file) ) { 
-                copyFolderAndContents($src . '/' . $file,$dst . '/' . $file); 
-            } 
-            else { 
-                copy($src . '/' . $file,$dst . '/' . $file); 
-            } 
-        } 
-    } 
-    closedir($dir); 
+function copyFolderAndContents($src,$dst) {
+    $dir = opendir($src);
+    @mkdir($dst);
+    while(false !== ( $file = readdir($dir)) ) {
+        if (( $file != '.' ) && ( $file != '..' )) {
+            if ( is_dir($src . '/' . $file) ) {
+                copyFolderAndContents($src . '/' . $file,$dst . '/' . $file);
+            }
+            else {
+                copy($src . '/' . $file,$dst . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
