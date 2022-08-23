@@ -31,7 +31,9 @@ package-lock.json
 
 # Misc #
 ########
+
 .old
+
 .hidden
 
 .tests
